@@ -1,1 +1,6 @@
-console.log("Hello World!");
+"use strict";
+
+(function(){
+	angular
+	.module("tagAnything", []);
+})();
