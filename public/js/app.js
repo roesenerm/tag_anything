@@ -5,20 +5,41 @@
 	.module("tagAnything", [
 		"ui.router"
 	])
-	.config(Router);
+	.config(Router)
+	.controller("productsIndexController", productsIndexCtrl)
+	.controller("productsShowController", produtsShowCtrl);
 
 	Router.$inject = ["$stateProvider", "$locationProvider", "$urlRouterProvider"];
 	function Router($stateProvider, $locationProvider, $urlRouterProvider){
 		$locationProvider.html5Mode(true);
 		$stateProvider
-		.state("main", {
+		.state("productsIndex", {
 			url: "/",
-			template: "<h2>This is working!<h2>"
+			templateUrl: "/html/products-index.html",
+			controller: "productsIndexController",
+			controllerAs: "pIndexVM"
 		})
-		.state("test", {
-			url: "/test",
-			template: "<h2>This is also working!<h2>"
+		.state("productsShow", {
+			url: "/products/:name",
+			templateUrl: "/html/products-show.html",
+			controller: "productsShowController",
+			controllerAs: "pShowVM"
 		});
 		$urlRouterProvider.otherwise("/");
+	}
+
+	function productsIndexCtrl() {
+		var vm = this;
+		vm.products = [
+			{name: "Product 1"},
+			{name: "Product 2"},
+			{name: "Product 3"}
+		];
+	}
+
+	productsShowCtrl.$inject = ["$stateParams"];
+	function produtsShowCtrl($stateParams) {
+		var vm = this;
+		vm.product = $stateParams;
 	}
 })();
